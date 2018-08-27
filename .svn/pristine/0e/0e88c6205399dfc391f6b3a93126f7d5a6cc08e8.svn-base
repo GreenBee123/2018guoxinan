@@ -1,0 +1,77 @@
+package dao;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import conn.Conn;
+import conn.ConnDB;
+import model.Ad;
+import model.Computer;
+
+public class ComputerDao {
+	Conn conn;
+	 public List<Computer> getComputer(){
+		  try {
+			  //对应第3部
+			  PreparedStatement prep = conn.connection.prepareStatement("select * from computer");
+				ResultSet rs = prep.executeQuery();
+			List<Computer> computers = new ArrayList<Computer>();//一行代表一个学生，很多学生就使用list集合保存，此处集合内容为空
+			while(rs.next()){
+				int cID=rs.getInt(1);
+				String cBrand=rs.getString(2);
+				String cModel=rs.getString(3);
+				Computer computer=new Computer(cID, cBrand, cModel);
+				computers.add(computer);
+			}
+			return computers;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  return null;
+	  }
+	 
+	 public int add(Computer computer){
+		 int result = 0;
+		 try {
+			PreparedStatement prep = conn.connection.prepareStatement("INSERT INTO computer"
+					+ "(`cID`,`cBrand`,`cModel`) VALUES(?,?,?)");
+			prep.setInt(1, computer.getcID());
+			prep.setString(2, computer.getcBrand());
+			prep.setString(3, computer.getcModel());
+			result = prep.executeUpdate();
+		 
+		 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return result;
+	 }
+	 
+	 public int update(Computer computer){
+		 int result = 0;
+		 try {
+			PreparedStatement prep = conn.connection.prepareStatement("update computer set `cBrand`=?,`cModel`=? where `cID`=?");
+			
+			prep.setString(1, computer.getcBrand());
+			prep.setString(2, computer.getcModel());
+			prep.setInt(3, computer.getcID());
+			result = prep.executeUpdate();
+		 
+		 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return result;
+	 }
+	 
+	 
+	public ComputerDao() {
+		super();
+		conn=new Conn();
+		// TODO Auto-generated constructor stub
+	}
+}

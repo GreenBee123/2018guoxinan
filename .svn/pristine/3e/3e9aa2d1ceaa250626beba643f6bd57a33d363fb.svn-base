@@ -1,0 +1,90 @@
+package dao;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import conn.Conn;
+import model.ComputerDetails;
+import model.Lightningrecord;
+import model.User;
+
+public class LightningrecordDao {
+	 Conn conn;
+	   public LightningrecordDao() {
+		   conn=new Conn();
+	   }
+	   public List<Lightningrecord> getLightningrecord(){
+		try {
+//			lID	int
+//			lTime	timestamp
+//			lCheakTime	timestamp
+//			lCheakTakeTime	timestamp
+//			lCheakRemarks	varchar
+//			lUserCharge	varchar
+//			lAttendantCharge	varchar
+
+			PreparedStatement prep = conn.connection.prepareStatement("select * from lightningrecord");
+			ResultSet rs = prep.executeQuery();
+			List<Lightningrecord> list = new ArrayList<Lightningrecord>();//一行代表一个学生，很多学生就使用list集合保存，此处集合内容为空
+			while(rs.next()) {
+			    int lID=rs.getInt(1);
+			    Timestamp lTime=rs.getTimestamp(2);
+			    Timestamp lCheakTime=rs.getTimestamp(3);
+			    Timestamp lCheakTakeTime=rs.getTimestamp(4);
+			    String lCheakRemarks=rs.getString(5);
+			    String lUserCharge=rs.getString(6);
+			    String lAttendantCharge=rs.getString(7);
+				Lightningrecord lightningrecord=new Lightningrecord(lID, lTime, lCheakTime, lCheakTakeTime, lCheakRemarks, lUserCharge, lAttendantCharge);
+				list.add(lightningrecord);
+			}
+			return list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	   }
+	   
+	   public int add(Lightningrecord lightningrecord){
+			 int result = 0;
+			 try {
+				PreparedStatement prep = conn.connection.prepareStatement("INSERT INTO lightningrecord"
+						+ "(`lID`,`lTime`,`lCheakTime`,`lCheakTakeTime`,`lCheakRemarks`,`lUserCharge`,`lAttendantCharge`) VALUES(?,?,?,?,?,?,?)");
+				prep.setInt(1, lightningrecord.getlID());
+				prep.setTimestamp(2, lightningrecord.getlTime());
+				prep.setTimestamp(3, lightningrecord.getlCheakTime());
+				prep.setTimestamp(4, lightningrecord.getlCheakTakeTime());
+				prep.setString(5, lightningrecord.getlCheakRemarks());
+				prep.setString(6, lightningrecord.getlUserCharge());
+				prep.setString(7, lightningrecord.getlAttendantCharge());
+				result = prep.executeUpdate();
+			 
+			 } catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 return result;
+		 }
+	   public int update(Lightningrecord lightningrecord){
+			 int result = 0;
+			 try {
+				PreparedStatement prep = conn.connection.prepareStatement("update lightningrecord set `lTime`=?,`lCheakTime`=?,`lCheakTakeTime`=?,`lCheakRemarks`=?,`lUserCharge`=?,`lAttendantCharge`=? where `lID`=?");
+				prep.setTimestamp(1, lightningrecord.getlTime());
+				prep.setTimestamp(2, lightningrecord.getlCheakTime());
+				prep.setTimestamp(3, lightningrecord.getlCheakTakeTime());
+				prep.setString(4, lightningrecord.getlCheakRemarks());
+				prep.setString(5, lightningrecord.getlUserCharge());
+				prep.setString(6, lightningrecord.getlAttendantCharge());
+				prep.setInt(7, lightningrecord.getlID());
+				result = prep.executeUpdate();
+			 } catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			 return result;
+		 }
+}

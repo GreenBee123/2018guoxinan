@@ -1,0 +1,41 @@
+package dao;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import conn.Conn;
+import conn.ConnDB;
+import model.Admin;
+
+
+public class AdminDao {
+	ConnDB conn;
+	 public List<Admin> getAdmin(){
+		  try {
+			  //对应第3部
+			  conn.getExecute("select * from ad");
+			List<Admin> admins = new ArrayList<Admin>();//一行代表一个学生，很多学生就使用list集合保存，此处集合内容为空
+			while(conn.rs.next()){
+				int adminID=conn.rs.getInt(1);
+				String adminName=conn.rs.getString(2);
+				String adminPwd=conn.rs.getString(3);
+				Admin admin=new Admin(adminID, adminName, adminPwd);
+				admins.add(admin);
+			}
+			return admins;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  return null;
+	  }
+	public AdminDao() {
+		super();
+		conn=new ConnDB();
+		// TODO Auto-generated constructor stub
+	}
+}

@@ -1,0 +1,78 @@
+package action;
+
+
+import java.util.List;
+import org.apache.struts2.ServletActionContext;
+import dao.AdDao;
+import model.Ad;
+
+
+public class AdAction {
+	//struts action中方法的规范，1.只能是返回String 2 不能有参数，3 必须抛出异常
+		//返回值的的字符串，就是方法执行完毕之后，跳转的下一个页面
+		AdDao adDao;
+		public AdDao getAdDao() {
+			return adDao;
+		}
+		public void setAdDao(AdDao adDao) {
+			this.adDao = adDao;
+		}
+		public Ad getAd() {
+			return ad;
+		}
+		public void setAd(Ad ad) {
+			this.ad = ad;
+		}
+		Ad ad;
+		public AdAction() {
+			super();
+			// TODO Auto-generated constructor stub
+			adDao=new AdDao();
+		}
+		public String getAll() throws Exception{
+			ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+			ServletActionContext.getRequest().setCharacterEncoding("utf-8");
+			ServletActionContext.getResponse().setContentType("text/html; charset=utf-8");
+			List<Ad> ads = adDao.getAd();//页面输出正确地址，这个方法就会被调用，
+			//调用这个方法就执行了对应dao中对应的查询数据库的方法
+			//PrintWriter out = ServletActionContext.getResponse().getWriter();
+			//for(Student student:students){
+				//out.println(student.getName()+ " " + student.getSex());
+			//}
+			//将数据库中取出的集合存放到页面
+			ServletActionContext.getRequest().setAttribute("ads", ads);
+			return null;
+		}
+		
+		public String getById() throws Exception{
+			ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+			ServletActionContext.getRequest().setCharacterEncoding("utf-8");
+			ServletActionContext.getResponse().setContentType("text/html; charset=utf-8");
+			Ad adPO = adDao.getById(ad.getAdID());//页面输出正确地址，这个方法就会被调用，
+			//调用这个方法就执行了对应dao中对应的查询数据库的方法
+			//PrintWriter out = ServletActionContext.getResponse().getWriter();
+			//for(Student student:students){
+				//out.println(student.getName()+ " " + student.getSex());
+			//}
+			//将数据库中取出的集合存放到页面
+			ServletActionContext.getRequest().setAttribute("ad", adPO);
+			return null;
+		}
+		
+		public String add()throws Exception{
+			ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+			ServletActionContext.getRequest().setCharacterEncoding("utf-8");
+			ServletActionContext.getResponse().setContentType("text/html; charset=utf-8");
+	        adDao.add(ad);
+	        System.out.println("add执行完毕");
+	        return null;
+		}
+		public String update()throws Exception{
+			ServletActionContext.getResponse().setCharacterEncoding("utf-8");
+			ServletActionContext.getRequest().setCharacterEncoding("utf-8");
+			ServletActionContext.getResponse().setContentType("text/html; charset=utf-8");
+	        adDao.update(ad);
+	        System.out.println("add执行完毕");
+	        return null;
+		}
+}

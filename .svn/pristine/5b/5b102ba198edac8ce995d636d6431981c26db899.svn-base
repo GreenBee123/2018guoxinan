@@ -1,0 +1,75 @@
+package dao;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import conn.Conn;
+import model.Requirement;
+import model.User;
+
+
+public class RequirementDao {
+	Conn conn;
+	public RequirementDao() {
+		conn=new Conn();
+	}
+	public List<Requirement> getRequirement(){
+
+		try {
+			PreparedStatement prep = conn.connection.prepareStatement("select * from requirement");
+			ResultSet rs = prep.executeQuery();
+			List<Requirement> list=new ArrayList<Requirement>();
+			while(rs.next()) {
+				int rID=rs.getInt(3);
+				Timestamp rTime=rs.getTimestamp(5);
+				String rRemarks=rs.getString(6);
+				String rType=rs.getString(7);
+			Requirement requirement=new Requirement(rID,rTime,rRemarks,rType);
+			list.add(requirement);
+			}
+			return list;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	 public int add(Requirement requirement){
+		 int result = 0;
+		 try {
+			PreparedStatement prep = conn.connection.prepareStatement("INSERT INTO requirement"
+					+ "(`rID`,`rTime`,`rRemarks`,`rType`) VALUES(?,?,?,?)");
+		
+			prep.setInt(1, requirement.getrID());
+			prep.setTimestamp(2, requirement.getrTime());
+			prep.setString(3, requirement.getrRemarks());
+			prep.setString(4, requirement.getrType());
+			result = prep.executeUpdate();
+		 
+		 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return result;
+	 }
+	 
+	 public int update(Requirement requirement){
+		 int result = 0;
+		 try {
+			PreparedStatement prep = conn.connection.prepareStatement("update requirement  set `rTime`=?,`rRemarks`=?,`rType`=? where `rID`=?");
+			prep.setTimestamp(1, requirement.getrTime());
+			prep.setString(2, requirement.getrRemarks());
+			prep.setString(3, requirement.getrType());
+			prep.setInt(4, requirement.getrID());
+			result = prep.executeUpdate();
+		 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return result;
+	 }
+
+}

@@ -1,0 +1,102 @@
+package dao;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
+
+import conn.Conn;
+import model.Ad;
+
+
+public class AdDao {
+	Conn conn;
+	 public List<Ad> getAd(){
+		  try {
+			  //对应第3部
+			  PreparedStatement prep = conn.connection.prepareStatement("select * from ad");
+				ResultSet rs = prep.executeQuery();
+			List<Ad> ads = new ArrayList<Ad>();//一行代表一个学生，很多学生就使用list集合保存，此处集合内容为空
+			while(rs.next()){
+				int adID=rs.getInt(1);
+				String adName=rs.getString(2);
+				String adPwd=rs.getString(3);
+				Ad ad=new Ad(adID, adName, adPwd);
+				ads.add(ad);
+			}
+			return ads;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  return null;
+	  }
+	 
+	 public Ad getById(int adID){
+		  try {
+			  //对应第3部
+			  PreparedStatement prep = conn.connection.prepareStatement("select * from ad where `adID`=?");
+			prep.setInt(1, adID);
+			ResultSet rs = prep.executeQuery();
+			List<Ad> ads = new ArrayList<Ad>();
+			Ad ad=null;
+			while(rs.next()){
+				//int adID=rs.getInt(1);
+				String adName=rs.getString(2);
+				String adPwd=rs.getString(3);
+				ad=new Ad(adID, adName, adPwd);
+			}
+			return ad;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		  return null;
+	  }
+	 
+	 
+	 public int add(Ad ad){
+		 int result = 0;
+		 try {
+			PreparedStatement prep = conn.connection.prepareStatement("INSERT INTO ad"
+					+ "(`adID`,`adName`,`adPwd`) VALUES(?,?,?)");
+		
+			prep.setInt(1, ad.getAdID());
+			prep.setString(2, ad.getAdName());
+			prep.setString(3, ad.getAdPwd());
+			result = prep.executeUpdate();
+		 
+		 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return result;
+	 }
+	 
+	 public int update(Ad ad){
+		 int result = 0;
+		 try {
+			PreparedStatement prep = conn.connection.prepareStatement("update ad set `adName`=?,`adPwd`=? where `adID`=?");
+					
+			prep.setString(1, ad.getAdName());
+			prep.setString(2, ad.getAdPwd());
+			prep.setInt(3, ad.getAdID());
+			result = prep.executeUpdate();
+		 
+		 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return result;
+	 }
+	 
+	public AdDao() {
+		super();
+		conn=new Conn();
+		// TODO Auto-generated constructor stub
+	}
+}

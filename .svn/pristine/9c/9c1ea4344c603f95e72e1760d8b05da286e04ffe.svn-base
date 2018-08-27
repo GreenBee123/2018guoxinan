@@ -1,0 +1,67 @@
+package dao;
+
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
+
+import conn.Conn;
+import model.ComputerDetails;
+
+
+
+//private int dID;                    //ID
+//private String dType;               //损坏类型
+//private String dCPU;                //CPU型号
+//private String dGraphicsCard;       //显卡型号
+//private String dHardDisk;           //硬盘容量
+//private String dMemory;  
+public class ComputerDetailsDao {
+   Conn conn;
+   public ComputerDetailsDao() {
+	   conn=new Conn();
+   }
+   public List<ComputerDetails> getComputerDetails(){
+	try {
+		PreparedStatement prep = conn.connection.prepareStatement("select * from computerdetails");
+		ResultSet rs = prep.executeQuery();
+		List<ComputerDetails> list = new ArrayList<ComputerDetails>();//一行代表一个学生，很多学生就使用list集合保存，此处集合内容为空
+		while(rs.next()) {
+			int dID=rs.getInt(1);
+			String dType=rs.getString(2);
+			String dCPU=rs.getString(3);
+			String dGraphicsCard=rs.getString(4);
+			String dHardDisk=rs.getString(5);
+			String dMemory=rs.getString(6);
+			ComputerDetails computerDetails=new ComputerDetails(dID, dType, dCPU, dGraphicsCard, dHardDisk, dMemory);
+			list.add(computerDetails);
+		}
+		return list;
+	} catch (SQLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
+   }
+   public int add(ComputerDetails computerDetails){
+		 int result = 0;
+		 try {
+			PreparedStatement prep = conn.connection.prepareStatement("INSERT INTO computerdetails(dID,dType,dCPU,dGraphicsCard,dHardDisk,dMemory) VALUES(?,?,?,?,?,?)");
+			prep.setInt(1, computerDetails.getdID());
+			prep.setString(2, computerDetails.getdType());
+			prep.setString(3, computerDetails.getdCPU());
+			prep.setString(4, computerDetails.getdGraphicsCard());
+			prep.setString(5, computerDetails.getdHardDisk());
+			prep.setString(6, computerDetails.getdMemory());			
+			result = prep.executeUpdate();
+		 
+		 } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 return result;
+	 }
+    
+}

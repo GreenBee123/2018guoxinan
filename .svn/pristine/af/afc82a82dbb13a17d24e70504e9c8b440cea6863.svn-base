@@ -1,0 +1,72 @@
+package model;
+
+import java.sql.Timestamp;
+
+public class Lightningrecord {
+	public Lightningrecord() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	private int lID;                    //	ID	
+	private Timestamp lTime;            //	抢单时间
+	private Timestamp lCheakTime;       //	收货时间
+	private Timestamp lCheakTakeTime;   //	确认收货时间
+	private String lCheakRemarks;       //	收货描述
+	private String lUserCharge;         //	用户评价
+	private String lAttendantCharge;    //	维修人员评价
+	public Lightningrecord(int lID, Timestamp lTime, Timestamp lCheakTime, Timestamp lCheakTakeTime,
+			String lCheakRemarks, String lUserCharge, String lAttendantCharge) {
+		super();
+		this.lID = lID;
+		this.lTime = lTime;
+		this.lCheakTime = lCheakTime;
+		this.lCheakTakeTime = lCheakTakeTime;
+		this.lCheakRemarks = lCheakRemarks;
+		this.lUserCharge = lUserCharge;
+		this.lAttendantCharge = lAttendantCharge;
+	}
+	public int getlID() {
+		return lID;
+	}
+	public void setlID(int lID) {
+		this.lID = lID;
+	}
+	public Timestamp getlTime() {
+		return lTime;
+	}
+	public void setlTime(Timestamp lTime) {
+		this.lTime = lTime;
+	}
+	public Timestamp getlCheakTime() {
+		return lCheakTime;
+	}
+	public void setlCheakTime(Timestamp lCheakTime) {
+		this.lCheakTime = lCheakTime;
+	}
+	public Timestamp getlCheakTakeTime() {
+		return lCheakTakeTime;
+	}
+	public void setlCheakTakeTime(Timestamp lCheakTakeTime) {
+		this.lCheakTakeTime = lCheakTakeTime;
+	}
+	public String getlCheakRemarks() {
+		return lCheakRemarks;
+	}
+	public void setlCheakRemarks(String lCheakRemarks) {
+		this.lCheakRemarks = lCheakRemarks;
+	}
+	public String getlUserCharge() {
+		return lUserCharge;
+	}
+	public void setlUserCharge(String lUserCharge) {
+		this.lUserCharge = lUserCharge;
+	}
+	public String getlAttendantCharge() {
+		return lAttendantCharge;
+	}
+	public void setlAttendantCharge(String lAttendantCharge) {
+		this.lAttendantCharge = lAttendantCharge;
+	}
+
+	
+}

@@ -1,0 +1,76 @@
+package model;
+
+public class ComputerDetails {
+	private int sID;
+	private int dID;                    //ID
+	private String dType;               //损坏类型
+	private String dCPU;                //CPU型号
+	private String dGraphicsCard;       //显卡型号
+	private String dHardDisk;           //硬盘容量
+	private String dMemory;             //内存容量
+	public ComputerDetails(int sID,int dID, String dType, String dCPU, String dGraphicsCard, String dHardDisk, String dMemory) {
+		super();
+		this.sID=sID;
+		this.dID = dID;
+		this.dType = dType;
+		this.dCPU = dCPU;
+		this.dGraphicsCard = dGraphicsCard;
+		this.dHardDisk = dHardDisk;
+		this.dMemory = dMemory;
+	}
+	public ComputerDetails(int dID, String dType, String dCPU, String dGraphicsCard, String dHardDisk, String dMemory) {
+		super();
+		this.sID=sID;
+		this.dID = dID;
+		this.dType = dType;
+		this.dCPU = dCPU;
+		this.dGraphicsCard = dGraphicsCard;
+		this.dHardDisk = dHardDisk;
+		this.dMemory = dMemory;
+	}
+	public int getdID() {
+		return dID;
+	}
+	public void setdID(int dID) {
+		this.dID = dID;
+	}
+	public String getdType() {
+		return dType;
+	}
+	public void setdType(String dType) {
+		this.dType = dType;
+	}
+	public String getdCPU() {
+		return dCPU;
+	}
+	public void setdCPU(String dCPU) {
+		this.dCPU = dCPU;
+	}
+	public String getdGraphicsCard() {
+		return dGraphicsCard;
+	}
+	public void setdGraphicsCard(String dGraphicsCard) {
+		this.dGraphicsCard = dGraphicsCard;
+	}
+	public String getdHardDisk() {
+		return dHardDisk;
+	}
+	public void setdHardDisk(String dHardDisk) {
+		this.dHardDisk = dHardDisk;
+	}
+	public String getdMemory() {
+		return dMemory;
+	}
+	public void setdMemory(String dMemory) {
+		this.dMemory = dMemory;
+	}
+	public int getsID() {
+		return sID;
+	}
+	public void setsID(int sID) {
+		this.sID = sID;
+	}
+	
+	
+	
+}

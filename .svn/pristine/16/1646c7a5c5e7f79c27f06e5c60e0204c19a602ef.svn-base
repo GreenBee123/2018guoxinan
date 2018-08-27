@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+
+<struts>
+<include file="struts-computer.xml"/>
+<include file="struts-computerDetails.xml"/>
+<include file="struts-requirement.xml"/>
+<include file="struts-lightningrecord.xml"/>
+<include file="struts-ad.xml"/>
+<include file="struts-user.xml"/>
+<include file="struts-attendant.xml"/>
+   <!-- struts把url请求分模块处理，name随意，extends继承默认包 -->
+	<package name="struts2" extends="struts-default" namespace="/">
+      <global-allowed-methods>getAll,add,update</global-allowed-methods>   
+	</package>
+</struts>
